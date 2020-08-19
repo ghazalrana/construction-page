@@ -2,7 +2,7 @@
 jenkins pipeline on GKE
 
 
-totorials
+tutorials
 
 https://github.com/kemallaydin/Configuring-CI-CD-on-Kubernetes-with-Jenkins
 
