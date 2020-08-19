@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: gzlkhan/constructionapp:{{BUILD_NUMBER}}
+        image: gzlkhan/constructionapp:tagVersion
         ports:
         - containerPort: 80
