@@ -20,6 +20,8 @@ https://medium.com/@prasenjitsarkar_79320/highly-available-jenkins-deployment-on
 
 https://gravitational.com/blog/kubectl-gke/ (kubeconfig for GKE cluster)
 
+https://porter.sh/best-practices/gke/   (kubeconfig for GKE cluster)
+
 
 
 
