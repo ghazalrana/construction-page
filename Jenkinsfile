@@ -25,9 +25,16 @@ pipeline {
         
         stage('Apply Kubernetes Files') {
       steps {
+          sh "chmod +x changeTag.sh"
+          sh "./changeTag.sh ${BUILD_NUMBER}" 
           withCredentials([usernamePassword(credentialsId: 'GKE-credentials', passwordVariable: 'GKEpwd', usernameVariable: 'GKEuser')]) {
-              sh 'cat deployment.yaml | sed "s/{{BUILD_NUMBER}}/$BUILD_NUMBER/g" | kubectl apply -f -'
-          sh 'kubectl apply -f service.yaml'
+              script{
+                  try{
+              sh "kubectl create -f node-app-pod.yml"
+                  }catch(error){
+                      sh " kubectl apply -f node-app-pod.yml
+                  }
+              }
        }
       }
   }
