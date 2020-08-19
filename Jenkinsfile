@@ -1,12 +1,6 @@
 pipeline {
     agent any
-    environment {
-        PROJECT_ID = ' wordpress-learning-277315'
-        CLUSTER_NAME = 'cluster-1 '
-        LOCATION = 'us-central1-c '
-        CREDENTIALS_ID = 'GKE-credentials'
-    }
-   
+    
     stages{
         stage('Build Docker Image'){
             steps{
@@ -31,10 +25,10 @@ pipeline {
         
         stage('Apply Kubernetes Files') {
       steps {
-          withKubeConfig([credentialsId: 'kubeconfig']) {
-          sh 'cat deployment.yaml | sed "s/{{BUILD_NUMBER}}/$BUILD_NUMBER/g" | kubectl apply -f -'
+          withCredentials([usernamePassword(credentialsId: 'GKE-credentials', passwordVariable: 'GKEpwd', usernameVariable: 'GKEuser')]) {
+              sh 'cat deployment.yaml | sed "s/{{BUILD_NUMBER}}/$BUILD_NUMBER/g" | kubectl apply -f -'
           sh 'kubectl apply -f service.yaml'
-        }
+       }
       }
   }
    }
