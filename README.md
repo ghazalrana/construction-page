@@ -18,6 +18,8 @@ https://www.youtube.com/watch?v=naUhXrV_rRA
 
 https://medium.com/@prasenjitsarkar_79320/highly-available-jenkins-deployment-on-google-kubernetes-engine-c2d9eeaeb45a
 
+https://gravitational.com/blog/kubectl-gke/ (kubeconfig for GKE cluster)
+
 
 
 
