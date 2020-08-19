@@ -32,7 +32,7 @@ pipeline {
                   try{
               sh "kubectl create -f node-app-pod.yml"
                   }catch(error){
-                      sh " kubectl apply -f node-app-pod.yml
+                      sh " kubectl apply -f node-app-pod.yml"
                   }
               }
        }
