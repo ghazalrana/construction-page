@@ -1,47 +1,46 @@
 pipeline {
-    agent any
-    
-    stages{
-        stage('Build Docker Image'){
-            steps{
-                sh "docker build . -t gzlkhan/constructionapp:${env.BUILD_NUMBER}"
-            }
-        }
-         stage('Dockerhub Push'){
-            
-             steps{
-              withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
-                    sh "docker login -u gzlkhan -p ${dockerHubPwd}"
-                    sh "docker push gzlkhan/constructionapp:${env.BUILD_NUMBER}"
-              }
-           }
-       }
-        stage('Docker Remove Image') {
-      steps {
-          sh "docker rmi gzlkhan/constructionapp:${env.BUILD_NUMBER}"
-      }
-    
-      }
-        
-        stage('Deploy to kubernetes') {
-      steps {
-          sh "chmod +x changeTag.sh"
-          sh "./changeTag.sh ${BUILD_NUMBER}" 
-          sshagent(['clusterssh']) {
-    sh "scp -o StrictHostKeyChecking=no service.yaml node-app-pod.yml m_ahmad00861@35.223.70.19:/home/m_ahmad00861/"
 
-          script{
-                  try{
-              sh "ssh m_ahmad00861@35.223.70.19 kubectl apply -f ." 
-                  }catch(error){
-                       sh "ssh m_ahmad00861@35.223.70.19 kubectl create -f ." 
-                  }
-              }
-          }
-           }
-      }
+  environment {
+    registry = "https://hub.docker.com/repository/docker/gzlkhan/constructionapp"
+    dockerImage = ""
   }
+
+  agent any
+
+  stages {
+
+    stage('Checkout Source') {
+      steps {
+        git 'https://github.com/ghazalrana/construction-page.git'
+      }
+    }
+
+    stage('Build image') {
+      steps{
+        script {
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+        }
+      }
+    }
+
+    stage('Push Image') {
+      steps{
+        script {
+          docker.withRegistry( "" ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
+
+    stage('Deploy App') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "deployment.yaml", kubeconfigId: "mykubeconfig")
+        }
+      }
+    }
+
+  }
+
 }
-       
-        
-  
