@@ -1,21 +1,40 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
   labels:
-    app: nginx
+    app: myweb
+  name: myweb
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: nginx
+      app: myweb
   template:
     metadata:
       labels:
-        app: nginx
+        app: myweb
     spec:
       containers:
-      - name: nginx
-        image: gzlkhan/constructionapp:tagVersion
-        ports:
-        - containerPort: 80
+      - image: gzlkhan/constructionapp
+        imagePullPolicy: Always
+        name: myweb
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: myweb
+  name: myweb
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: myweb
+  type: LoadBalance
+  
+  
+  
+ 
