@@ -23,24 +23,25 @@ pipeline {
     
       }
         
-        stage('Apply Kubernetes Files') {
+        stage('Deploy to kubernetes') {
       steps {
           sh "chmod +x changeTag.sh"
           sh "./changeTag.sh ${BUILD_NUMBER}" 
-          withCredentials([usernamePassword(credentialsId: 'GKE-credentials', passwordVariable: 'GKEpwd', usernameVariable: 'GKEuser')]) {
-              script{
+          sshagent(['clusterssh']) {
+    sh "scp -o StrictHostKeyChecking=no service.yaml node-app-pod.yml admin@35.223.70.19:/home/m_ahmad00861/"
+
+          script{
                   try{
-              sh "kubectl create -f node-app-pod.yml"
+              sh "ssh admin@35.223.70.19 kubectl apply -f ." 
                   }catch(error){
-                      sh " kubectl apply -f node-app-pod.yml"
+                       sh "ssh admin@35.223.70.19 kubectl create -f ." 
                   }
               }
-       }
+          }
+           }
       }
   }
-   }
 }
-    
        
         
   
