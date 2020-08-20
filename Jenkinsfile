@@ -28,13 +28,13 @@ pipeline {
           sh "chmod +x changeTag.sh"
           sh "./changeTag.sh ${BUILD_NUMBER}" 
           sshagent(['clusterssh']) {
-    sh "scp -o StrictHostKeyChecking=no service.yaml node-app-pod.yml admin@35.223.70.19:/home/m_ahmad00861/"
+    sh "scp -o StrictHostKeyChecking=no service.yaml node-app-pod.yml m_ahmad00861@35.223.70.19:/home/m_ahmad00861/"
 
           script{
                   try{
-              sh "ssh admin@35.223.70.19 kubectl apply -f ." 
+              sh "ssh m_ahmad00861@35.223.70.19 kubectl apply -f ." 
                   }catch(error){
-                       sh "ssh admin@35.223.70.19 kubectl create -f ." 
+                       sh "ssh m_ahmad00861@35.223.70.19 kubectl create -f ." 
                   }
               }
           }
