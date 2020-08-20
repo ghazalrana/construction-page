@@ -15,11 +15,13 @@ pipeline {
       }
     }
 
-    stage('Build Docker Image'){
-steps{
-sh "docker build . -t gzlkhan/constructionapp:${env.BUILD_NUMBER}"
-}
-}
+     stage('Build image') {
+      steps{
+        script {
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+        }
+      }
+    }
 
     stage('Push Image') {
       steps{
