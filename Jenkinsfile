@@ -1,7 +1,7 @@
 pipeline {
 
   environment {
-    registry = "https://hub.docker.com/repository/docker/gzlkhan/constructionapp"
+    registry = "gzlkhan/constructionapp"
     dockerImage = ""
   }
 
