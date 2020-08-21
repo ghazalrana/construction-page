@@ -19,13 +19,18 @@ pipeline {
               }
            }
        }
-      stage('Apply Kubernetes files') {
-         steps{
-    withKubeConfig([credentialsId: 'mykubeconfig', serverUrl: 'https://34.72.253.103']) {
-      sh "kubectl create -f deployment.yaml"
-    }
-  }
-}
+      
+      
+      stage('Dockerhub Push'){
+            
+             steps{
+      
+      kubeconfig(credentialsId: 'clusterauth', serverUrl: 'https://34.72.253.103') {
+    sh "kubectl create -f deployment.yaml"
+      }
+             }
+      }
+      
   }
 }
 
