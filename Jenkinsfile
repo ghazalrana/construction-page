@@ -19,13 +19,12 @@ pipeline {
               }
            }
        }
-       stage('Deploy App') {
-      steps {
-        script {
-          kubernetesDeploy(configs: "deployment.yaml", kubeconfigId: "mykubeconfig")
-        }
-      }
+      stage('Apply Kubernetes files') {
+    withKubeConfig([credentialsId: 'mykubeconfig', serverUrl: 'https://34.72.253.103']) {
+      sh 'kubectl create -f deployment.yaml'
     }
+  }
+}
   }
 }
 
