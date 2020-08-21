@@ -9,15 +9,7 @@ pipeline {
        sh "docker build . -t gzlkhan/constructionapp:${DOCKER_TAG}"
           }
          }
-     stage('Dockerhub Push'){
-        steps{
-          withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
-           sh "docker login -u gzlkhan -p ${dockerHubPwd}"
-          sh "docker push gzlkhan/constructionapp:${DOCKER_TAG}"
-        }
-     }
-    }
-   }
+  }
 }
 
 
