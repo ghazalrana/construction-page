@@ -1,37 +1,27 @@
 pipeline {
-
-  environment {
-    registry = "gzlkhan/constructionapp"
-    dockerImage = ""
-  }
-
-  agent any
-
-  stages {
-
-    stage('Checkout Source') {
+    agent any
+    
+    stages{
+        stage('Build Docker Image'){
+            steps{
+                sh "docker build . -t gzlkhan/constructionapp:${env.BUILD_NUMBER}"
+            }
+        }
+         stage('Dockerhub Push'){
+            
+             steps{
+              withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
+                    sh "docker login -u gzlkhan -p ${dockerHubPwd}"
+                    sh "docker push gzlkhan/constructionapp:${env.BUILD_NUMBER}"
+              }
+           }
+       }
+        stage('Docker Remove Image') {
       steps {
-        git 'https://github.com/ghazalrana/construction-page.git'
+          sh "docker rmi gzlkhan/constructionapp:${env.BUILD_NUMBER}"
       }
-    }
-
-     stage('Build image') {
-      steps{
-        script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
-        }
+    
       }
-    }
-
-    stage('Push Image') {
-      steps{
-        script {
-          docker.withRegistry( "" ) {
-            dockerImage.push()
-          }
-        }
-      }
-    }
 
     stage('Deploy App') {
       steps {
