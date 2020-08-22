@@ -23,8 +23,6 @@ pipeline {
       stage('Apply Kubernetes files') {
          steps{
    withCredentials([usernamePassword(credentialsId: 'clusterauth', passwordVariable: 'password', usernameVariable: 'Username')]) {
-    
-   sh "gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project wordpress-learning-277315"
       sh "kubectl create -f deployment.yaml"
     }
   }
