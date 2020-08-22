@@ -16,7 +16,7 @@ spec:
         app: myweb
     spec:
       containers:
-      - image: gzlkhan/constructionapp
+      - image: gzlkhan/constructionapp:latest
         imagePullPolicy: Always
         name: myweb
 
