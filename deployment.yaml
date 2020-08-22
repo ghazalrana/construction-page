@@ -19,6 +19,8 @@ spec:
       - image: gzlkhan/constructionapp:latest
         imagePullPolicy: Always
         name: myweb
+        ports:
+        - containerPort: 80
 
 ---
 apiVersion: v1
