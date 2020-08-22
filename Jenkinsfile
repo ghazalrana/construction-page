@@ -5,7 +5,7 @@ pipeline {
         PROJECT_ID = 'wordpress-learning-277315'
         CLUSTER_NAME = 'cluster-1'
         LOCATION = 'us-central1-c'
-        CREDENTIALS_ID = 'Wordpress-Learning'
+        CREDENTIALS_ID = Wordpress-Learning 
  }
    stages{
         stage('Build Docker Image'){
