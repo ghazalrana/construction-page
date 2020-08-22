@@ -27,7 +27,7 @@ pipeline {
       stage('Deploy to GKE') {
             steps{
                 sh "sed -i 's/constructionapp:latest/constructionapp:${env.BUILD_ID}/g' deployment.yaml"
-                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', verifyDeployments: true])
+                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, credentialsId: env.CREDENTIALS_ID , manifestPattern: 'deployment.yaml', verifyDeployments: true])
             }
         }
       
