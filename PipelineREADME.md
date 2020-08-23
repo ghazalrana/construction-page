@@ -4,7 +4,7 @@
                                                         --------------------------
                                                         
                                                         
-#Click on manageJenkins > Configue System
+# Click on manageJenkins > Configue System
 
 under "Jenkins Location" paste the jenkins url 
 
@@ -67,7 +67,7 @@ At the bottom of the page click on the cloud and enter configurations there
                          docker push $IMAGE_NAME
                          
                          
-    Again select "Execute shell" and paste :
+   Again select "Execute shell" and paste :
     
                           IMAGE_NAME="gzlkhan/constructionapp:${BUILD_NUMBER}"
                                   
@@ -87,13 +87,15 @@ At the bottom of the page click on the cloud and enter configurations there
                              
                              $ ~/.kube$  cp ./config  /var/lib/jenkins/.kube
                              
-    and restart jenkins
+   and restart jenkins
     
                             $ sudo /etc/init.d/jenkins restart
                             
                             
                             
-     tutorial:  https://www.youtube.com/watch?v=288rTpd1SDE
+  tutorial:  
+  
+                                https://www.youtube.com/watch?v=288rTpd1SDE
                              
                              
                              
