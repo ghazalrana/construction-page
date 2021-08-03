@@ -3,7 +3,7 @@
                                                         -------------------------
                                                         --------------------------
                                                         
-                                                        
+     Steps:                                                   
 # Click on manageJenkins > Configue System
 
 under "Jenkins Location" paste the jenkins url 
